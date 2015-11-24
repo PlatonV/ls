@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 09:43:12 by vplaton           #+#    #+#             */
-/*   Updated: 2015/11/20 12:27:49 by vplaton          ###   ########.fr       */
+/*   Updated: 2015/11/24 16:14:37 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_flags(short **flags);
 void	add_flags(short *flags, char *from);
 int		check_flag(short *flags, char flag);
 
-int		list_dir(char *dir);
+int		list_dir(char *dir, short *flags);
 
 #endif
 

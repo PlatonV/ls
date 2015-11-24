@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 10:11:26 by vplaton           #+#    #+#             */
-/*   Updated: 2015/11/20 10:54:47 by vplaton          ###   ########.fr       */
+/*   Updated: 2015/11/24 16:20:58 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	add_flags(short *flags, char *from)
 int		check_flag(short *flags, char flag)
 {
 	if (flag >= 'a' && flag <= 'z')
-		return(flags[flag - 'a' - ('a' - 'Z')] = 1);
+		return(flags[flag - 'a' - ('a' - 'Z')] == 1);
 	else
-		return(flags[flag - 'A'] = 0);
+		return(flags[flag - 'A'] == 0);
 }

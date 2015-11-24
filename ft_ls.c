@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 09:57:22 by vplaton           #+#    #+#             */
-/*   Updated: 2015/11/20 13:39:34 by vplaton          ###   ########.fr       */
+/*   Updated: 2015/11/24 16:20:03 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main(int argc, char **argv)
 		if (argv[arg_index][0] == '-')
 			add_flags(flags, argv[arg_index]);
 		else
-			if ((list_dir(argv[arg_index])) == -1)
+			if ((list_dir(argv[arg_index], flags)) == -1)
 				ft_putendl("Error");
 		arg_index += 1;
 	}

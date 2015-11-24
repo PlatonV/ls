@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 11:43:19 by vplaton           #+#    #+#             */
-/*   Updated: 2015/11/20 15:22:51 by vplaton          ###   ########.fr       */
+/*   Updated: 2015/11/24 15:50:47 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,12 @@ void		lstswap(t_lsdata *node1, t_lsdata *node2)
 	node2->filename = tmp;
 }
 
-void		lstsort(t_lsdata **lst, int cmp(int, int))
+int			lstcmp(t_lsdata* node1, t_lsdata* node2)
+{
+	return (ft_strcmp(node1->filename, node2->filename));
+}
+
+void		lstsort(t_lsdata **lst, int cmp(t_lsdata* nod1, t_lsdata* nod2))
 {
 	int			done;
 	t_lsdata	*p;
@@ -49,9 +54,15 @@ void		lstsort(t_lsdata **lst, int cmp(int, int))
 	done = 0;
 	while (!done)
 	{
+		done = 1;
 		p = *lst;
 		while (p->next)
 		{
+			if (cmp(p, p->next) > 0)
+			{
+				lstswap(p, p->next);
+				done = 0;
+			}
 			p = p->next;
 		}
 	}
