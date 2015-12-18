@@ -6,17 +6,22 @@
 #    By: vplaton <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/20 09:52:38 by vplaton           #+#    #+#              #
-#    Updated: 2015/11/20 12:07:12 by vplaton          ###   ########.fr        #
+#*   Updated: 2015/12/18 01:22:57 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 CXX = gcc
 NAME = ft_ls
 FLAGS = -Wall -Werror -Wextra
-SRC = ft_ls.c\
+SRC = main.c\
+	  ft_ls.c\
 	  list.c\
 	  lsdata_list.c\
-	  flags.c
+	  lsdata_list_2.c\
+	  long.c\
+	  long_2.c\
+	  flags.c\
+	  utils.c
 OBJ = *.o
 HEADERS = libft/
 LIBS = libft/ -lft

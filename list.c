@@ -6,37 +6,28 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 10:33:18 by vplaton           #+#    #+#             */
-/*   Updated: 2015/11/24 16:19:24 by                  ###   ########.fr       */
+/*   Updated: 2015/12/18 02:01:20 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void		print_dir_name(t_lsdata *lst)
+static void		print_dir_name(t_lsdata *lst, short *flags)
 {
 	while (lst)
 	{
-		if (lst->filename[0] != '.')
-			ft_putendl(lst->filename);
+		if (check_flag(flags, 'a') || lst->data[0] != '.')
+			ft_putendl(lst->data);
 		lst = lst->next;
 	}
 }
 
-static void		print_dir_name_hidden(t_lsdata *lst)
+void		print_all(t_lsdata *lst, short *flags)
 {
-	while (lst)
-	{
-		ft_putendl(lst->filename);
-		lst = lst->next;
-	}
-}
-
-static void		put_to_list(t_dirstruct *data, t_lsdata **lst)
-{
-	if (!(*lst))
-		*lst = lstnew(data);
+	if (check_flag(flags, 'l'))
+		print_long(lst, flags);
 	else
-		lstadd(lstnew(data), lst);
+		print_dir_name(lst, flags);
 }
 
 int				list_dir(char *name, short *flags)
@@ -49,12 +40,9 @@ int				list_dir(char *name, short *flags)
 	if ((dir = opendir(name)))
 	{
 		while ((dir_data = readdir(dir)))
-			put_to_list(dir_data, &lst);
+			put_to_list(dir_data->d_name, &lst);
+		lstsort(&lst, lstcmp_lexic);
+		print_all(lst, flags);
 	}
-	lstsort(&lst, lstcmp);
-	if (check_flag(flags, 'a'))
-		print_dir_name_hidden(lst);
-	else
-		print_dir_name(lst);
 	return (0);
 }

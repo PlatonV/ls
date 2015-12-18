@@ -6,19 +6,18 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 11:43:19 by vplaton           #+#    #+#             */
-/*   Updated: 2015/11/24 15:50:47 by                  ###   ########.fr       */
+/*   Updated: 2015/12/18 01:20:43 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "lsdata_list.h"
+#include "ft_ls.h"
 
-t_lsdata	*lstnew(t_dirstruct *data)
+t_lsdata	*lstnew(char *data)
 {
 	t_lsdata	*lst;
 
 	lst = (t_lsdata*)malloc(sizeof(t_lsdata));
-	lst->filename = ft_strdup(data->d_name);
+	lst->data = ft_strdup(data);
 	lst->next = NULL;
 	return (lst);
 }
@@ -36,14 +35,14 @@ void		lstswap(t_lsdata *node1, t_lsdata *node2)
 {
 	char	*tmp;
 
-	tmp = node1->filename;
-	node1->filename = node2->filename;
-	node2->filename = tmp;
+	tmp = node1->data;
+	node1->data = node2->data;
+	node2->data = tmp;
 }
 
-int			lstcmp(t_lsdata* node1, t_lsdata* node2)
+int			lstcmp_lexic(t_lsdata* node1, t_lsdata* node2)
 {
-	return (ft_strcmp(node1->filename, node2->filename));
+	return (ft_strcmp(node1->data, node2->data));
 }
 
 void		lstsort(t_lsdata **lst, int cmp(t_lsdata* nod1, t_lsdata* nod2))
