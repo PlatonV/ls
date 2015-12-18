@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 09:43:12 by vplaton           #+#    #+#             */
-/*   Updated: 2015/12/18 01:57:25 by                  ###   ########.fr       */
+/*   Updated: 2015/12/18 02:15:01 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ typedef struct			s_lsdata
 
 char			*g_currentpath;
 
-int				ft_numsize(int n);
-int				get_maxsize(t_lsdata(*lst));
-int				get_maxlink(t_lsdata(*lst));
+unsigned int	ft_numsize(unsigned long n);
+unsigned int	get_maxsize(t_lsdata(*lst));
+unsigned int	get_maxlink(t_lsdata(*lst));
 t_lsdata		*lstnew(char *data);
 int				list_size(t_lsdata *lst);
 void			lstadd(t_lsdata *node, t_lsdata **lst);

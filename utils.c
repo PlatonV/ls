@@ -6,17 +6,19 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/18 00:44:07 by                   #+#    #+#             */
-/*   Updated: 2015/12/18 00:48:16 by                  ###   ########.fr       */
+/*   Updated: 2015/12/18 02:31:12 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		ft_numsize(int n)
+unsigned int	ft_numsize(unsigned long n)
 {
-	int		result;
+	unsigned int	result;
 
 	result = 0;
+	if (n == 0)
+		return (1);
 	while (n)
 	{
 		n /= 10;

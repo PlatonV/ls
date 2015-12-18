@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/17 23:57:39 by                   #+#    #+#             */
-/*   Updated: 2015/12/18 02:01:04 by                  ###   ########.fr       */
+/*   Updated: 2015/12/18 02:25:36 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,11 @@ static void		print_date(t_stat s)
 
 	t = s.st_mtime;
 	times = ft_strsplit(ctime(&t), ' ');
+	times[1][0] = ft_tolower(times[1][0]);
 	ft_putstr(times[1]);
 	ft_putstr(" ");
+	if (ft_atoi(times[2]) < 10)
+		ft_putstr(" ");
 	ft_putstr(times[2]);
 	ft_putstr(" ");
 	times[3][5] = '\0';
@@ -66,7 +69,8 @@ void			print_long(t_lsdata *lst, short *flags)
 	{
 		if (check_flag(flags, 'a') || lst->data[0] != '.')
 		{
-			lstat(lst->data, &sstat);
+			lstat(ft_strcat(ft_strcat(ft_strdup(g_currentpath), "/"),
+							lst->data), &sstat);
 			print_permissions(sstat);
 			print_nmax(sstat.st_nlink, maxlink);
 			ft_putstr(ft_strcat(getpwuid(sstat.st_uid)->pw_name, " "));
