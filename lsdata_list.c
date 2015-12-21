@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 11:43:19 by vplaton           #+#    #+#             */
-/*   Updated: 2015/12/18 01:20:43 by                  ###   ########.fr       */
+/*   Updated: 2015/12/19 15:15:14 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ void		lstswap(t_lsdata *node1, t_lsdata *node2)
 int			lstcmp_lexic(t_lsdata* node1, t_lsdata* node2)
 {
 	return (ft_strcmp(node1->data, node2->data));
+}
+
+int			lstcmp_dir(t_lsdata* node1, t_lsdata* node2)
+{
+	if (opendir(node1->data) && !opendir(node2->data))
+		return (1);
+	return (0);
 }
 
 void		lstsort(t_lsdata **lst, int cmp(t_lsdata* nod1, t_lsdata* nod2))

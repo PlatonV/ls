@@ -6,31 +6,54 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 10:33:18 by vplaton           #+#    #+#             */
-/*   Updated: 2015/12/18 02:01:20 by                  ###   ########.fr       */
+/*   Updated: 2015/12/19 13:40:47 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void		print_dir_name(t_lsdata *lst, short *flags)
+static void		print_file(char *file)
+{
+	t_maxes	maxes;
+
+	if (!check_flag('l'))
+	{
+		ft_putendl(file);
+		return;
+	}
+	maxes.size = 0;
+	maxes.link = 0;
+	maxes.owner = 0;
+	maxes.group = 0;
+	print_long_file(file, maxes);
+}
+
+static void		print_files(t_lsdata *lst)
 {
 	while (lst)
 	{
-		if (check_flag(flags, 'a') || lst->data[0] != '.')
-			ft_putendl(lst->data);
+		print_file(lst->data);
 		lst = lst->next;
 	}
 }
 
-void		print_all(t_lsdata *lst, short *flags)
+static void		skip_hidden(t_lsdata **lst)
 {
-	if (check_flag(flags, 'l'))
-		print_long(lst, flags);
-	else
-		print_dir_name(lst, flags);
+	while ((*lst) && (*lst)->data[0] == '.')
+		(*lst) = (*lst)->next;
 }
 
-int				list_dir(char *name, short *flags)
+void		print_lst(t_lsdata *lst)
+{
+	if (!check_flag('a'))
+		skip_hidden(&lst);
+	if (check_flag('l'))
+		print_long_lst(lst);
+	else
+		print_files(lst);
+}
+
+int				list_dir(char *name)
 {
 	DIR			*dir;
 	t_dirstruct	*dir_data;
@@ -42,7 +65,13 @@ int				list_dir(char *name, short *flags)
 		while ((dir_data = readdir(dir)))
 			put_to_list(dir_data->d_name, &lst);
 		lstsort(&lst, lstcmp_lexic);
-		print_all(lst, flags);
+		print_lst(lst);
 	}
-	return (0);
+	if (errno == ENOTDIR)
+	{
+		g_currentpath = ".";
+		print_file(name);
+	}
+	ft_error(name);
+	return (1);
 }

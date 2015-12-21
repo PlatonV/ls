@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/17 23:57:39 by                   #+#    #+#             */
-/*   Updated: 2015/12/18 02:25:36 by                  ###   ########.fr       */
+/*   Updated: 2015/12/20 16:02:19 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 static void		print_permissions(t_stat s)
 {
-	ft_putchar(S_ISDIR(s.st_mode) ? 'd' : '-');
+	if (S_ISDIR(s.st_mode))
+		ft_putchar('d');
+	else if (S_ISLNK(s.st_mode))
+		ft_putchar('l');
+	else
+		ft_putchar('-');
 	ft_putchar((s.st_mode & S_IRUSR) ? 'r' : '-');
 	ft_putchar((s.st_mode & S_IWUSR) ? 'w' : '-');
 	ft_putchar((s.st_mode & S_IXUSR) ? 'x' : '-');
@@ -38,6 +43,17 @@ static void		print_nmax(int n, int maxsize)
 	ft_putchar(' ');
 }
 
+static void		print_strmax(char *str, int maxsize)
+{
+	int		index;
+
+	index = maxsize - ft_strlen(str);
+	while (index-- > 0)
+		ft_putchar(' ');
+	ft_putstr(str);
+	ft_putchar(' ');
+}
+
 static void		print_date(t_stat s)
 {
 	char		**times;
@@ -57,29 +73,36 @@ static void		print_date(t_stat s)
 	ft_putstr(" ");
 }
 
-void			print_long(t_lsdata *lst, short *flags)
+void			print_long_file(char *file, t_maxes maxes)
 {
-	int		maxsize;
-	int		maxlink;
 	t_stat	sstat;
 
-	maxsize = get_maxsize(lst);
-	maxlink = get_maxlink(lst);
+	lstat(ft_strcat(ft_strcat(ft_strdup(g_currentpath), "/"),
+					file), &sstat);
+	print_permissions(sstat);
+	print_nmax(sstat.st_nlink, maxes.link);
+	print_strmax(getpwuid(sstat.st_uid)->pw_name, maxes.owner);
+	print_strmax(getgrgid(sstat.st_gid)->gr_name, maxes.group);
+	print_nmax(sstat.st_size, maxes.size);
+	print_date(sstat);
+	ft_putstr(ft_strcat(file, " "));
+	ft_putendl("");
+}
+
+void			print_long_lst(t_lsdata *lst)
+{
+	t_maxes	maxes;
+
+	maxes.size = get_maxsize(lst);
+	maxes.link = get_maxlink(lst);
+	maxes.owner = get_maxowner(lst);
+	maxes.group = get_maxgroup(lst);
+	ft_putstr("total ");
+	ft_putnbr(get_blocks(lst));
+	ft_putendl("");
 	while (lst)
 	{
-		if (check_flag(flags, 'a') || lst->data[0] != '.')
-		{
-			lstat(ft_strcat(ft_strcat(ft_strdup(g_currentpath), "/"),
-							lst->data), &sstat);
-			print_permissions(sstat);
-			print_nmax(sstat.st_nlink, maxlink);
-			ft_putstr(ft_strcat(getpwuid(sstat.st_uid)->pw_name, " "));
-			ft_putstr(ft_strcat(getgrgid(sstat.st_gid)->gr_name, " "));
-			print_nmax(sstat.st_size, maxsize);
-			print_date(sstat);
-			ft_putstr(ft_strcat(lst->data, " "));
-			ft_putendl("");
-		}
+		print_long_file(lst->data, maxes);
 		lst = lst->next;
 	}
 }
