@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/17 23:57:39 by                   #+#    #+#             */
-/*   Updated: 2015/12/20 16:02:19 by                  ###   ########.fr       */
+/*   Updated: 2015/12/28 20:25:08 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ void			print_long_file(char *file, t_maxes maxes)
 {
 	t_stat	sstat;
 
-	lstat(ft_strcat(ft_strcat(ft_strdup(g_currentpath), "/"),
-					file), &sstat);
+	lstat(file, &sstat);
 	print_permissions(sstat);
 	print_nmax(sstat.st_nlink, maxes.link);
 	print_strmax(getpwuid(sstat.st_uid)->pw_name, maxes.owner);

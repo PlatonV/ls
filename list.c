@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 10:33:18 by vplaton           #+#    #+#             */
-/*   Updated: 2015/12/19 13:40:47 by                  ###   ########.fr       */
+/*   Updated: 2015/12/28 20:53:27 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		print_file(char *file)
 
 	if (!check_flag('l'))
 	{
-		ft_putendl(file);
+		ft_putendl(get_filename(file));
 		return;
 	}
 	maxes.size = 0;
@@ -39,7 +39,7 @@ static void		print_files(t_lsdata *lst)
 
 static void		skip_hidden(t_lsdata **lst)
 {
-	while ((*lst) && (*lst)->data[0] == '.')
+	while ((*lst) && get_filename((*lst)->data)[0] == '.')
 		(*lst) = (*lst)->next;
 }
 
@@ -60,18 +60,16 @@ int				list_dir(char *name)
 	t_lsdata	*lst;
 
 	lst = NULL;
+	ft_strcat(name, "/");
 	if ((dir = opendir(name)))
 	{
 		while ((dir_data = readdir(dir)))
-			put_to_list(dir_data->d_name, &lst);
+			put_to_list(ft_strjoin(name, dir_data->d_name), &lst);
 		lstsort(&lst, lstcmp_lexic);
 		print_lst(lst);
 	}
 	if (errno == ENOTDIR)
-	{
-		g_currentpath = ".";
 		print_file(name);
-	}
 	ft_error(name);
 	return (1);
 }

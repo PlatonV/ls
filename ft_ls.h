@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 09:43:12 by vplaton           #+#    #+#             */
-/*   Updated: 2015/12/19 14:20:23 by                  ###   ########.fr       */
+/*   Updated: 2015/12/28 20:41:03 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ typedef struct			s_lsdata
 	struct s_lsdata		*next;
 }						t_lsdata;
 
-char			*g_currentpath;
 char			g_flags[56];
 
+char			*get_filename(char *s);
 unsigned int	ft_numsize(unsigned long n);
 unsigned int	get_maxsize(t_lsdata *lst);
 unsigned int	get_maxlink(t_lsdata *lst);
