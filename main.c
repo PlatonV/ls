@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/17 23:55:31 by                   #+#    #+#             */
-/*   Updated: 2015/12/28 20:50:05 by                  ###   ########.fr       */
+/*   Updated: 2016/01/08 17:11:27 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		list_targets(t_lsdata *targets)
 {
 	if (list_size(targets) == 1)
 	{
-		list_dir(targets->data);
+		list(targets->data);
 		return;
 	}
 	lstsort(&targets, lstcmp_lexic);
@@ -25,9 +25,7 @@ static void		list_targets(t_lsdata *targets)
 	{
 		if (opendir(targets->data))
 			ft_putendl(ft_strjoin(targets->data, ":"));
-		list_dir(targets->data);
-		if (targets->next)
-			ft_putendl("");
+		list(targets->data);
 		targets = targets->next;
 	}
 }

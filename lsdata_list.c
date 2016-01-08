@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 11:43:19 by vplaton           #+#    #+#             */
-/*   Updated: 2015/12/19 15:15:14 by                  ###   ########.fr       */
+/*   Updated: 2016/01/08 18:00:13 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ void		lstadd(t_lsdata *node, t_lsdata **lst)
 	{
 		node->next = *lst;
 		*lst = node;
+	}
+}
+
+void		lstdel(t_lsdata *node)
+{
+	t_lsdata	*n;
+
+	while (n)
+	{
+		n = node->next;
+		free(node->data);
+		free(node);
 	}
 }
 

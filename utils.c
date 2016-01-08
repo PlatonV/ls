@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/18 00:44:07 by                   #+#    #+#             */
-/*   Updated: 2015/12/28 20:41:00 by                  ###   ########.fr       */
+/*   Updated: 2016/01/07 13:21:48 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,17 @@ char			*get_filename(char *s)
 	char		*it;
 
 	it = s;
+	result = NULL;
 	while (*it)
 	{
 		if (*it == '/')
 			result = it + 1;
 		it++;
 	}
-	return (result);
+	if (!result)
+		return (s);
+	else
+		return (result);
 }
 
 unsigned int	ft_numsize(unsigned long n)

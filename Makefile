@@ -6,7 +6,7 @@
 #    By: vplaton <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/20 09:52:38 by vplaton           #+#    #+#              #
-#*   Updated: 2015/12/19 12:06:42 by                  ###   ########.fr       *#
+#*   Updated: 2016/01/08 17:12:47 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ FLAGS = -Wall -Werror -Wextra
 SRC = main.c\
 	  ft_ls.c\
 	  list.c\
+	  rec.c\
 	  lsdata_list.c\
 	  lsdata_list_2.c\
 	  long.c\

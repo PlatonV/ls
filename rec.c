@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   rec.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/19 12:04:52 by                   #+#    #+#             */
-/*   Updated: 2016/01/08 17:36:57 by                  ###   ########.fr       */
+/*   Created: 2016/01/07 13:21:58 by                   #+#    #+#             */
+/*   Updated: 2016/01/08 17:39:08 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		ft_error(const char *str)
+void			list_rec(t_lsdata *lst)
 {
-	char		*name;
-
-	name = ft_strnew(ft_strlen(str));
-	if (errno && errno != ENOTDIR)
+	while (lst)
 	{
-		name = ft_strncpy(name, str, ft_strlen(str) - 1);
-		write(2, "ft_ls: cannot acces ", 20);
-		perror(name);
+		if (ft_strcmp(get_filename(lst->data), "..") &&
+				ft_strcmp(get_filename(lst->data), ".") &&
+				opendir(lst->data))
+		{
+			if (check_flag('a') || !(get_filename(lst->data)[0] == '.'))
+			{
+				ft_putendl(ft_strjoin(ft_strjoin("\n", lst->data), ":"));
+				list(lst->data);
+			}
+		}
+		lst = lst->next;
 	}
 }
