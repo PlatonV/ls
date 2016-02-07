@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/20 10:33:18 by vplaton           #+#    #+#             */
-/*   Updated: 2016/01/08 18:02:01 by                  ###   ########.fr       */
+/*   Created: 2016/01/16 14:43:19 by vplaton           #+#    #+#             */
+/*   Updated: 2016/02/07 13:06:05 by vplaton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 static void		print_file(char *file)
 {
 	if (check_flag('a') || !(get_filename(file)[0] == '.'))
-		ft_putendl(get_filename(file));
+	{
+		if (!g_ptargets)
+			ft_putendl(get_filename(file));
+		else
+			ft_putendl(file);
+	}
 }
 
-static void		print_files(t_lsdata *lst)
+void			print_files(t_lsdata *lst)
 {
 	t_maxes		maxes;
 
@@ -26,6 +31,8 @@ static void		print_files(t_lsdata *lst)
 	maxes.link = get_maxlink(lst);
 	maxes.owner = get_maxowner(lst);
 	maxes.group = get_maxgroup(lst);
+	maxes.min = get_maxmin(lst);
+	maxes.max = get_maxmax(lst);
 	while (lst)
 	{
 		if (!check_flag('l'))
@@ -61,17 +68,19 @@ void			list(char *name)
 	{
 		while ((dir_data = readdir(dir)))
 			put_to_list(ft_strjoin(name, dir_data->d_name), &lst);
+		closedir(dir);
 		lstsort(&lst, lstcmp_lexic);
+		if (check_flag('t'))
+			lstsort(&lst, lstcmp_time);
 		print_lst(lst);
 	}
-	if (errno == ENOTDIR)
+	if (check_flag('R'))
+		list_rec(lst);
+	else if (errno == ENOTDIR)
 	{
 		name[ft_strlen(name) - 1] = '\0';
 		put_to_list(ft_strdup(name), &lst);
 		print_lst(lst);
 	}
-	if (check_flag('R'))
-		list_rec(lst);
-	lstdel(lst);
 	ft_error(name);
 }

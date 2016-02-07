@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/20 11:43:19 by vplaton           #+#    #+#             */
-/*   Updated: 2016/01/08 18:00:13 by                  ###   ########.fr       */
+/*   Created: 2016/01/16 15:01:48 by vplaton           #+#    #+#             */
+/*   Updated: 2016/01/26 15:06:20 by vplaton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void		lstdel(t_lsdata *node)
 {
 	t_lsdata	*n;
 
+	n = node->next;
 	while (n)
 	{
 		n = node->next;
@@ -60,6 +61,18 @@ int			lstcmp_lexic(t_lsdata* node1, t_lsdata* node2)
 int			lstcmp_dir(t_lsdata* node1, t_lsdata* node2)
 {
 	if (opendir(node1->data) && !opendir(node2->data))
+		return (1);
+	return (0);
+}
+
+int			lstcmp_time(t_lsdata* node1, t_lsdata* node2)
+{
+	t_stat	stat1;
+	t_stat	stat2;
+
+	lstat(node1->data, &stat1);
+	lstat(node2->data, &stat2);
+	if (stat1.st_mtime < stat2.st_mtime)
 		return (1);
 	return (0);
 }
