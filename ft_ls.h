@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/16 14:43:11 by vplaton           #+#    #+#             */
-/*   Updated: 2016/02/07 13:06:44 by vplaton          ###   ########.fr       */
+/*   Updated: 2016/02/17 14:21:34 by vplaton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char			g_flags[200];
 char			g_ptargets;
 
 char			*get_filename(char *s);
+unsigned int	ft_max(unsigned long a, unsigned long b);
 unsigned int	ft_numsize(unsigned long n);
 unsigned int	get_maxsize(t_lsdata *lst);
 unsigned int	get_maxlink(t_lsdata *lst);
@@ -81,5 +82,6 @@ void			list_rec(t_lsdata *lst);
 void			print_lst_rec(t_lsdata *lst);
 void			ft_error(const char *str);
 void			putslash(char *str);
+void			invalid_option(char option);
 
 #endif

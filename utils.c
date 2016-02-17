@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/16 15:01:27 by vplaton           #+#    #+#             */
-/*   Updated: 2016/02/07 13:55:56 by vplaton          ###   ########.fr       */
+/*   Updated: 2016/02/16 15:12:57 by vplaton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ char			*get_filename(char *s)
 		return (s);
 	else
 		return (result);
+}
+
+unsigned int	ft_max(unsigned long a, unsigned long b)
+{
+	if (a > b)
+		return (a);
+	return (b);
 }
 
 unsigned int	ft_numsize(unsigned long n)
@@ -61,7 +68,7 @@ void			print_file2(char *file)
 		ft_putstr(file);
 	if (S_ISLNK(s.st_mode))
 	{
-		readlink(file, str, 100);
+		readlink(file, str, 800);
 		ft_putstr(" -> ");
 		ft_putstr(str);
 	}

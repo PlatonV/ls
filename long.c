@@ -6,17 +6,14 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/16 15:01:19 by vplaton           #+#    #+#             */
-/*   Updated: 2016/02/07 13:55:55 by vplaton          ###   ########.fr       */
+/*   Updated: 2016/02/17 14:05:24 by vplaton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void		print_permissions(char *file)
+static void		print_mode(t_stat s)
 {
-	t_stat	s;
-
-	lstat(file, &s);
 	if (S_ISDIR(s.st_mode))
 		ft_putchar('d');
 	else if (S_ISLNK(s.st_mode))
@@ -29,6 +26,14 @@ static void		print_permissions(char *file)
 		ft_putchar('b');
 	else
 		ft_putchar('-');
+}
+
+static void		print_permissions(char *file)
+{
+	t_stat	s;
+
+	lstat(file, &s);
+	print_mode(s);
 	ft_putchar((s.st_mode & S_IRUSR) ? 'r' : '-');
 	ft_putchar((s.st_mode & S_IWUSR) ? 'w' : '-');
 	ft_putchar((s.st_mode & S_IXUSR) ? 'x' : '-');
@@ -106,16 +111,22 @@ static void		print_date(t_stat s)
 
 void			print_size(t_stat st, t_maxes maxes)
 {
+	int		aux;
+
 	if (S_ISCHR(st.st_mode) || S_ISBLK(st.st_mode))
 	{
+		ft_putchar(' ');
 		print_nmax(major(st.st_rdev), maxes.max);
-		ft_putstr(", ");
+		ft_putstr(",");
 		print_nmax(minor(st.st_rdev), maxes.min);
 		ft_putchar(' ');
 	}
 	else
 	{
-		print_nmax(st.st_size, maxes.size);
+		aux = maxes.max;
+		while (aux--)
+			ft_putchar(' ');
+		print_nmax(st.st_size, ft_max(maxes.min, maxes.size));
 		ft_putchar(' ');
 	}
 }
