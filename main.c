@@ -6,26 +6,22 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/16 14:43:04 by vplaton           #+#    #+#             */
-/*   Updated: 2016/02/17 14:39:36 by vplaton          ###   ########.fr       */
+/*   Updated: 2016/02/18 14:25:16 by vplaton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-int		g_first;
 
 static void		print_target_files(t_lsdata **targets)
 {
 	t_lsdata	*lst;
 	t_stat		s;
 
-	g_ptargets = 1;
 	while ((*targets) && !(opendir((*targets)->data)))
 	{
 		lstat((*targets)->data, &s);
 		if (!errno || errno == ENOTDIR || S_ISLNK(s.st_mode))
 		{
-			g_first = 1;
 			put_to_list((*targets)->data, &lst);
 		}
 		else
@@ -38,14 +34,13 @@ static void		print_target_files(t_lsdata **targets)
 	if (check_flag('t'))
 		lstsort(&lst, lstcmp_time);
 	print_files(lst);
-	g_ptargets = 0;
+	g_first = 1;
 }
 
 static void		list_targets(t_lsdata *targets)
 {
 	DIR		*dir;
 
-	g_first = 1;
 	if (list_size(targets) == 1)
 	{
 		if ((dir = opendir(targets->data)))
@@ -62,10 +57,9 @@ static void		list_targets(t_lsdata *targets)
 		{
 			closedir(dir);
 			if (!g_first)
-			{
-				ft_putchar('\n');
 				g_first = 1;
-			}
+			else
+				ft_putchar('\n');
 			ft_putendl(ft_strjoin(targets->data, ":"));
 			list(targets->data);
 			targets = targets->next;
@@ -84,8 +78,13 @@ int		main(int argc, char **argv)
 	targets = NULL;
 	while (arg_index < argc && argv[arg_index][0] == '-')
 	{
-		add_flags(argv[arg_index]);
-		arg_index += 1;
+		if (check_flagstrval(argv[arg_index]))
+		{
+			add_flags(argv[arg_index]);
+			arg_index += 1;
+		}
+		else
+			break ;
 	}
 	while (arg_index < argc)
 	{

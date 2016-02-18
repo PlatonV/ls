@@ -6,15 +6,29 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/20 10:11:26 by vplaton           #+#    #+#             */
-/*   Updated: 2016/02/17 14:21:07 by vplaton          ###   ########.fr       */
+/*   Updated: 2016/02/18 14:29:49 by vplaton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+int		check_flagstrval(char *str)
+{
+	t_stat		s;
+
+	if (lstat(str, &s) == 0)
+		return (0);
+	else
+	{
+		errno = 0;
+		return (1);
+	}
+}
+
 int		is_valid(char c)
 {
-	if (c == 'l' || c == 'r' || c == 't' || c == 'R' || c == 'a' || c == '1')
+	if (c == 'l' || c == 'r' || c == 't' || c == 'R' || c == 'a'
+			|| c == '-' || c == '1')
 		return (1);
 	else
 	{

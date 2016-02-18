@@ -6,7 +6,7 @@
 /*   By: vplaton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/16 14:43:11 by vplaton           #+#    #+#             */
-/*   Updated: 2016/02/17 14:21:34 by vplaton          ###   ########.fr       */
+/*   Updated: 2016/02/18 14:30:17 by vplaton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 
 typedef struct stat		t_stat;
 typedef struct dirent	t_dirstruct;
+
+int						g_first;
 
 typedef struct			s_maxes
 {
@@ -83,5 +85,6 @@ void			print_lst_rec(t_lsdata *lst);
 void			ft_error(const char *str);
 void			putslash(char *str);
 void			invalid_option(char option);
+int				check_flagstrval(char *str);
 
 #endif
